@@ -1,0 +1,675 @@
+
+--Вход в терминал и создание структуры каталогов--
+
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02
+$ ls
+
+Создаём папку(католог) Алисы
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02
+$ mkdir alice
+
+Создаём папку(католог) Боба
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02
+$ mkdir bob
+
+Переходим в католог Алисы
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02
+$ cd alice
+
+Создаём в Алисе католог Проект
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice
+$ mkdir project
+
+Переходим в папку поект 
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice
+$ cd project
+
+Возращаемся в католог Алиса 
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project 
+$ cd ..
+
+--Инициализация репозитария и настройка Git--
+
+Инициализируем репозитарий в текущем каталоге
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice
+$ git init
+Initialized empty Git repository in C:/Users/u211-19/Desktop/lab02/alice/.git/
+
+Настроим репозитарий Алисы
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice (master)
+$ git config user.name 'Alice (IvanovII)'
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice (master)
+$ git config user.email 'a89261608027a@mail.'
+
+--Создание коммитов--
+--Занесение файлов под контроль версий--
+
+Смотрим сосояние рабочей копии и видим что была создана ветка Мастер ,
+и в ней отсутсвуют коммиты 
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice (master)
+$ git status
+On branch master
+No commits yet
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        project/
+nothing added to commit but untracked files present (use "git add" to track)
+
+Переходим в католог Проджект
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice (master)
+$ cd project
+
+Добавим файл main.cpp в отслеживаемые (в индекс)
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (master)
+$ git add main.cpp
+
+Смотрим состояние рабочей копии и замечаем извеннения, что были добавлены:
+папка Bin, файл main.cpp,  папка obj, файл project.cbp.
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (master)
+$ ls
+bin/  main.cpp  obj/  project.cbp
+
+Выполним коммит с файлом main.cpp и коротким сообщением
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (master)
+$ git commit -m 'code: заготовка программы'
+[master (root-commit) 0d54750] code: заготовка программы
+ 1 file changed, 9 insertions(+)
+ create mode 100644 project/main.cpp
+
+--Составление сообщений к коммитам--
+
+Добавление файла project.cbp в индекс и сделан коммит с ним, тема — build
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (master)
+$ git add project.cbp
+warning: LF will be replaced by CRLF in project/project.cbp.
+The file will have its original line endings in your working directory
+
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (master)
+$ git commit -m 'build: add project file'
+[master e03b40f] build: add project file
+ 1 file changed, 40 insertions(+)
+ create mode 100644 project/project.cbp
+
+--Создание коммитов с изменениями--
+Заменим тело функции main() на ввод двух чисел:
+
+cout << "Enter A and B: ";
+int a, b;
+cin >> a >> b;
+
+Добавить в программу вывод разности a и b.
+
+Коммитим изменения 
+
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (master)
+$ git commit -m "add sum and diff"
+[master 59f5269] add sum and diff
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+--Игнорирование файлов--
+Добавим файл tt.txt в отслеживаемые (в индекс)
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (master)
+$ git add tt.txt
+
+Занесим в каталог obj в список игнорируемых и проверяем что католог obj 
+не отображаеться 
+ДО 
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (master)
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        new file:   tt.txt
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   main.cpp
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        bin/
+        obj/
+        project.depend
+ПОСЛЕ
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (master)
+$ git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        .gitignore
+        project.depend
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (master)
+$ git add .gitignore
+
+Создаём коммит с .gitignore, тема — git
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (master)
+$ git commit -m "git: gitignore"
+[master ec77fbb] git: gitignore
+ 1 file changed, 2 insertions(+)
+ create mode 100644 project/.gitignore
+
+--Просмотр истории--
+_Работа с журналом репозитария_
+
+Показывает файлы, измененные в коммитах;
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (master)
+$ git log --oneline --decorate
+ec77fbb (HEAD -> master) git: gitignore
+59f5269 add sum and diff
+e03b40f build: add project file
+0d54750 code: caaioiaea i?ia?aiiu
+
+Показывает коммиты с bild: в сообщении
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (master)
+$ git log --grep "build"
+commit e03b40fb5b3c5f92726fffb7caa6399e59e818e5
+Author: Alice (IvanovII) <a89261608027a@mail>
+Date:   Mon Mar 1 14:24:17 2021 +0300
+
+    build: add project file
+
+Показывает коммиты атрагивающие project.cbp.
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (master)
+$ git log -- project.cbp
+commit e03b40fb5b3c5f92726fffb7caa6399e59e818e5
+Author: Alice (IvanovII) <a89261608027a@mail>
+Date:   Mon Mar 1 14:24:17 2021 +0300
+
+    build: add project file
+
+_Просмотр коммитов_
+Смотрим текущщий(последний) комит 
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (master)
+$ git show HEAD
+commit ec77fbb59a0e38fc41a10cea0639ff2789d9b661 (HEAD -> master)
+Author: Alice (IvanovII) <a89261608027a@mail>
+Date:   Mon Mar 1 15:00:44 2021 +0300
+
+    git: gitignore
+
+diff --git a/project/.gitignore b/project/.gitignore
+new file mode 100644
+index 0000000..4c7473d
+--- /dev/null
++++ b/project/.gitignore
+@@ -0,0 +1,2 @@
++/bin
++/obj
+
+Смотрим последний коммит по имени ветви(Мастер)
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (master)
+$ git show master
+commit ec77fbb59a0e38fc41a10cea0639ff2789d9b661 (HEAD -> master)
+Author: Alice (IvanovII) <a89261608027a@mail>
+Date:   Mon Mar 1 15:00:44 2021 +0300
+
+    git: gitignore
+
+diff --git a/project/.gitignore b/project/.gitignore
+new file mode 100644
+index 0000000..4c7473d
+--- /dev/null
++++ b/project/.gitignore
+@@ -0,0 +1,2 @@
++/bin
++/obj
+
+Смотрим комит по хэшу нужного коммита
+$ git show ec77
+commit ec77fbb59a0e38fc41a10cea0639ff2789d9b661 (HEAD -> master)
+Author: Alice (IvanovII) <a89261608027a@mail>
+Date:   Mon Mar 1 15:00:44 2021 +0300
+
+    git: gitignore
+
+diff --git a/project/.gitignore b/project/.gitignore
+new file mode 100644
+index 0000000..4c7473d
+--- /dev/null
++++ b/project/.gitignore
+@@ -0,0 +1,2 @@
++/bin
++/obj
+
+_Просмотр изменений_
+Просмотр изминений от первого до последнего коммита 
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (master)
+$ git diff HEAD~3 HEAD
+diff --git a/project/.gitignore b/project/.gitignore
+new file mode 100644
+index 0000000..4c7473d
+--- /dev/null
++++ b/project/.gitignore
+@@ -0,0 +1,2 @@
++/bin
++/obj
+diff --git a/project/main.cpp b/project/main.cpp
+index b4392ec..c4f6adb 100644
+--- a/project/main.cpp
++++ b/project/main.cpp
+@@ -4,6 +4,10 @@ using namespace std;
+
+ int main()
+ {
+-    cout << "Hello world!" << endl;
++    cout << "Enter A and B: ";
++    int a, b;
++    cin >> a >> b;
++    cout << "A + B = " << a + b << '\n'
++     << "A - B = " << a - b << '\n';
+     return 0;
+ }
+diff --git a/project/project.cbp b/project/project.cbp
+new file mode 100644
+index 0000000..99bb702
+--- /dev/null
++++ b/project/project.cbp
+@@ -0,0 +1,40 @@
++<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
++<CodeBlocks_project_file>
++       <FileVersion major="1" minor="6" />
++       <Project>
++               <Option title="project" />
++               <Option pch_mode="2" />
++               <Option compiler="gcc" />
++               <Build>
++                       <Target title="Debug">
++                               <Option output="bin/Debug/project" prefix_auto="1" extension_auto="1" />
++                               <Option object_output="obj/Debug/" />
++                               <Option type="1" />
++                               <Option compiler="gcc" />
++                               <Compiler>
++                                       <Add option="-g" />
++                               </Compiler>
++                       </Target>
++                       <Target title="Release">
++                               <Option output="bin/Release/project" prefix_auto="1" extension_auto="1" />
++                               <Option object_output="obj/Release/" />
++                               <Option type="1" />
++                               <Option compiler="gcc" />
++                               <Compiler>
++                                       <Add option="-O2" />
++                               </Compiler>
++                               <Linker>
++                                       <Add option="-s" />
++                               </Linker>
++                       </Target>
++               </Build>
++               <Compiler>
++                       <Add option="-Wall" />
++                       <Add option="-fexceptions" />
++               </Compiler>
++               <Unit filename="main.cpp" />
++               <Extensions>
++                       <lib_finder disable_auto="1" />
++               </Extensions>
++       </Project>
++</CodeBlocks_project_file>
+
+_Использование GUI_
+
+--Откат изменений--
+Добавление изменений рабочей копии и коммит вывода произведения
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (master)
+$ git add -u
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (master)
+$ git commit -m "build: add cout pow"
+[master 745ac8c] build: add cout pow
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+Откат этого файла к состоянию в последнем коммите (HEAD):
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (master)
+$ git checkout HEAD -- main.cpp
+
+--Обмен кодом через удаленное хранилище--
+
+_Регистрация на GitHub_
+_Отправка проекта на GitHub_
+
+Создание репозитария на Git и ввод необходиммых команд
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (master)
+$ git remote add origin https://github.com/Goozluck/cs-lab02.git
+git push -u origin main
+
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (master)
+$ git branch -M main
+
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (main)
+$ git push -u origin main
+
+Logon failed, use ctrl+c to cancel basic credential prompt.
+Username for 'https://github.com': Goozluck
+Enumerating objects: 16, done.
+Counting objects: 100% (16/16), done.
+Compressing objects: 100% (10/10), done.
+Writing objects: 100% (16/16), 1.79 KiB | 96.00 KiB/s, done.
+Total 16 (delta 0), reused 0 (delta 0)
+To https://github.com/Goozluck/cs-lab02.git
+ * [new branch]      main -> main
+Branch 'main' set up to track remote branch 'main' from 'origin'.
+
+Просмотр Адреса
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (main)
+$ git remote -v
+origin  https://github.com/Goozluck/cs-lab02.git (fetch)
+origin  https://github.com/Goozluck/cs-lab02.git (push)
+
+Загрузка изменений 
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (main)
+$ git fetch
+
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (main)
+$ git log --oneline --decorate --all --graph
+* ec77fbb (HEAD -> main, origin/main) git: gitignore
+* 59f5269 add sum and diff
+* e03b40f build: add project file
+* 0d54750 code: caaioiaea i?ia?aiiu
+
+--Совместная работа над проектом без конфликтов правок--
+
+Созадние коммита в репозитарии Боба и добавление вывода деления
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (main)
+$ git add -u
+
+
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/bob/project (main)
+$ git commit -m "build: add cout div"
+[main d4bedf5] build: add cout div
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+Загружаем изменения на Алисе
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/bob/project (main)
+$ git fetch
+
+Подгружаем репозитарий Алисы к скаченной версии
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (main)
+$ git pull --ff-only
+Already up to date.
+
+Отправка коммита
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/bob/project (main)
+$ git push
+Logon failed, use ctrl+c to cancel basic credential prompt.
+Username for 'https://github.com': Goozluck
+Enumerating objects: 7, done.
+Counting objects: 100% (7/7), done.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (4/4), 415 bytes | 207.00 KiB/s, done.
+Total 4 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/Goozluck/cs-lab02.git
+   ec77fbb..d4bedf5  main -> main
+
+Созадние коммита в репозитарии Алисы и добавление вывода произведения
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (main)
+$ git add -u
+
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (main)
+$ git commit -m "build: add cout pow"
+[main c839ebe] build: add cout pow
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+
+Отправка коммита на Git	
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (main)
+$ git push
+Logon failed, use ctrl+c to cancel basic credential prompt.
+Username for 'https://github.com': Goozluck
+Enumerating objects: 7, done.
+Counting objects: 100% (7/7), done.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (4/4), 434 bytes | 217.00 KiB/s, done.
+Total 4 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/Goozluck/cs-lab02.git
+   d4bedf5..c839ebe  main -> main
+
+Загрузка изменений
+u211-19@PROG-07 MINGW32 ~/Desktop/lab02/alice/project (main)
+$ git fetch
+Updating 1b6b084..388bca9
+Fast-forward
+ project/main.cpp | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+--Разрешение конфликтов правок при совместной работе--
+
+Созадние коммита в репозитарии Алисы и добавление вывода Максимума
+u211-19@PROG-06 MINGW32 ~/Desktop/lab02/Alice/cs-lab02/project (main)
+$ git commit -a -m "max"
+[main 47e1880] max
+ Committer: u211-19 <u211-19@public.mpei.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+Отправка коммита на Git
+u211-19@PROG-06 MINGW32 ~/Desktop/lab02/Alice/cs-lab02/project (main)
+$ git push
+Logon failed, use ctrl+c to cancel basic credential prompt.
+Username for 'https://github.com': Goozluck
+Enumerating objects: 7, done.
+Counting objects: 100% (7/7), done.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (4/4), 424 bytes | 212.00 KiB/s, done.
+Total 4 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/Goozluck/cs-lab02.git
+   388bca9..47e1880  main -> main
+
+Загрузка изменений
+u211-19@PROG-06 MINGW32 ~/Desktop/lab02/Alice/cs-lab02/project (main)
+$ git fetch
+remote: Enumerating objects: 7, done.
+remote: Counting objects: 100% (7/7), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 4 (delta 1), reused 4 (delta 1), pack-reused 0
+Unpacking objects: 100% (4/4), done.
+From https://github.com/Goozluck/cs-lab02
+   47e1880..c4974fc  main       -> origin/main
+
+Продвижение ветки master к скачанной версии:
+u211-19@PROG-06 MINGW32 ~/Desktop/lab02/Alice/cs-lab02/project (main)
+$ git pull --ff-only
+Updating 47e1880..c4974fc
+Fast-forward
+ project/main.cpp | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+Созадние коммита в репозитарии Боба и добавление вывода Минимума
+u211-19@PROG-06 MINGW32 ~/Desktop/lab02/Bob/cs-lab02/project (main)
+$ git commit -a -m "min"
+[main cc5d784] min
+ Committer: u211-19 <u211-19@public.mpei.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+Сообщении об ошибке ,так как версия Боба не подгружена к соновной версии 
+u211-19@PROG-06 MINGW32 ~/Desktop/lab02/Bob/cs-lab02/project (main)
+$ git push
+Username for 'https://github.com': goozluck
+To https://github.com/Goozluck/cs-lab02.git
+ ! [rejected]        main -> main (non-fast-forward)
+error: failed to push some refs to 'https://github.com/Goozluck/cs-lab02.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Integrate the remote changes (e.g.
+hint: 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+Загрузка в рабочию копию данный из Git
+u211-19@PROG-06 MINGW32 ~/Desktop/lab02/Bob/cs-lab02/project (main)
+$ git fetch
+From https://github.com/Goozluck/cs-lab02
+ + c4974fc...47e1880 main       -> origin/main  (forced update)
+
+Отбражение истории всех веток
+u211-19@PROG-06 MINGW32 ~/Desktop/lab02/Bob/cs-lab02/project (main)
+$ git log --oneline --decorate --all --graph
+* cc5d784 (HEAD -> main) min
+| * 47e1880 (origin/main, origin/HEAD) max
+|/
+* 388bca9 oiii?aiea
+* 1b6b084 aaeaiea
+* ec77fbb git: gitignore
+* 59f5269 add sum and diff
+* e03b40f build: add project file
+* 0d54750 code: caaioiaea i?ia?aiiu
+
+Перемещение коммита Боба поверх коммита Алисы 
+u211-19@PROG-06 MINGW32 ~/Desktop/lab02/Bob/cs-lab02/project (main)
+$ git rebase origin/main
+First, rewinding head to replay your work on top of it...
+Applying: min
+Using index info to reconstruct a base tree...
+M       project/main.cpp
+Falling back to patching base and 3-way merge...
+Auto-merging project/main.cpp
+CONFLICT (content): Merge conflict in project/main.cpp
+error: Failed to merge in the changes.
+hint: Use 'git am --show-current-patch' to see the failed patch
+Patch failed at 0001 min
+Resolve all conflicts manually, mark them as resolved with
+"git add/rm <conflicted_files>", then run "git rebase --continue".
+You can instead skip this commit: run "git rebase --skip".
+To abort and get back to the state before "git rebase", run "git rebase --abort".
+
+Продолжение прерваной операции
+u211-19@PROG-06 MINGW32 ~/Desktop/lab02/Bob/cs-lab02/project (main|REBASE 1/1)
+$ git add main.cpp
+u211-19@PROG-06 MINGW32 ~/Desktop/lab02/Bob/cs-lab02/project (main|REBASE 1/1)
+$ git rebase --continue
+Applying: min
+
+Просмотр истории всех веток
+u211-19@PROG-06 MINGW32 ~/Desktop/lab02/Bob/cs-lab02/project (main)
+$ git log --oneline --decorate --all --graph
+* 9cc90d2 (HEAD -> main) min
+* 47e1880 (origin/main, origin/HEAD) max
+* 388bca9 oiii?aiea
+* 1b6b084 aaeaiea
+* ec77fbb git: gitignore
+* 59f5269 add sum and diff
+* e03b40f build: add project file
+* 0d54750 code: caaioiaea i?ia?aiiu
+
+Загрузка изменений в Git
+u211-19@PROG-06 MINGW32 ~/Desktop/lab02/Bob/cs-lab02/project (main)
+$ git push
+Username for 'https://github.com': goozluck
+Enumerating objects: 7, done.
+Counting objects: 100% (7/7), done.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (4/4), 404 bytes | 202.00 KiB/s, done.
+Total 4 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/Goozluck/cs-lab02.git
+   47e1880..9cc90d2  main -> main
+
+--Использование веток--
+
+Создание ветки double
+u211-19@PROG-06 MINGW32 ~/Desktop/lab02/Alice/cs-lab02/project (main)
+$ git branch double
+
+Переход на ветку double
+u211-19@PROG-06 MINGW32 ~/Desktop/lab02/Alice/cs-lab02/project (main)
+$ git checkout double
+Switched to branch 'double'
+
+Создание комита и сохранение изменений в ветки double
+u211-19@PROG-06 MINGW32 ~/Desktop/lab02/Alice/cs-lab02/project (double)
+$ git commit -a -m "double"
+[double 7fddc92] double
+ Committer: u211-19 <u211-19@public.mpei.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+Простомтр изменения всех веток в репозитарии
+u211-19@PROG-06 MINGW32 ~/Desktop/lab02/Alice/cs-lab02/project (double)
+$  git log --oneline --decorate --all --graph
+* 7fddc92 (HEAD -> double) double
+* 47e1880 (origin/main, origin/HEAD, main) max
+* 388bca9 oiii?aiea
+* 1b6b084 aaeaiea
+* ec77fbb git: gitignore
+* 59f5269 add sum and diff
+* e03b40f build: add project file
+* 0d54750 code: caaioiaea i?ia?aiiu
+
+Переключаемся на ветку master
+u211-19@PROG-06 MINGW32 ~/Desktop/lab02/Alice/cs-lab02/project (double)
+$ git checkout main
+Switched to branch 'main'
+Your branch is up to date with 'origin/main'.
+
+Слияния ветки double в master
+u211-19@PROG-06 MINGW32 ~/Desktop/lab02/Alice/cs-lab02/project (main)
+$ git merge double
+Updating 47e1880..7fddc92
+Fast-forward
+ project/main.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+Простомтр изменения всех веток в репозитарии
+u211-19@PROG-06 MINGW32 ~/Desktop/lab02/Alice/cs-lab02/project (main)
+$  git log --oneline --decorate --all --graph
+* 7fddc92 (HEAD -> main, double) double
+* 47e1880 (origin/main, origin/HEAD) max
+* 388bca9 oiii?aiea
+* 1b6b084 aaeaiea
+* ec77fbb git: gitignore
+* 59f5269 add sum and diff
+* e03b40f build: add project file
+* 0d54750 code: caaioiaea i?ia?aiiu
+
+Загрузка изменений в репозитарий main
+u211-19@PROG-06 MINGW32 ~/Desktop/lab02/Alice/cs-lab02/project (main)
+$ git fetch
+remote: Enumerating objects: 7, done.
+remote: Counting objects: 100% (7/7), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 4 (delta 1), reused 4 (delta 1), pack-reused 0
+Unpacking objects: 100% (4/4), done.
+From https://github.com/Goozluck/cs-lab02
+   47e1880..9cc90d2  main       -> origin/main
+
